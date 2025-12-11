@@ -1,0 +1,26 @@
+{
+  "name": "spotify-bdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matheus-Merlos/spotify-bdd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Matheus-Merlos/spotify-bdd/issues"
+  },
+  "homepage": "https://github.com/Matheus-Merlos/spotify-bdd#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.3.0",
+    "chai": "^6.2.1",
+    "selenium-webdriver": "^4.39.0"
+  }
+}
