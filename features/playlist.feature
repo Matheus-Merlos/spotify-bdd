@@ -66,12 +66,11 @@ Feature: YouTube Music Playlist Management
         And playback should follow the updated track order
 
 
-
-
     Scenario: Change playlist visibility to private
         Given I have a Google account
         And Execute login Scenario
-        And I have a public playlist
+        And I have a playlist named "DO ROCK"
+        And The playlist is public
         When I change the playlist visibility to private
         Then the playlist should no longer be visible to other users
 
