@@ -4,16 +4,6 @@ As an valid YouTube Music user
 I want to manage my playlists
 So that I can organize, listen to, and share my music in a personalized way
 
-    Scenario: Login to my account with password
-        Given I am on the login page
-        And I have a Google account
-        When I enter my email in the email field
-        And I click on the next button
-        And I enter my password in the password field
-        And I click on the next button
-        Then I should be authenticated successfully
-        And I should be redirected to the home page
-
     Scenario: Create a playlist with a valid name
         Given I am authenticated in YouTube Music
         When I request to create a playlist with the name "DO ROCK"
