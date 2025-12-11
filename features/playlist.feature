@@ -1,8 +1,8 @@
 Feature: YouTube Music Playlist Management
 
-As an valid YouTube Music user
-I want to manage my playlists
-So that I can organize, listen to, and share my music in a personalized way
+    As an valid YouTube Music user
+    I want to manage my playlists
+    So that I can organize, listen to, and share my music in a personalized way
 
     Scenario: Create a playlist with a valid name
         Given I have a Google account
@@ -18,7 +18,7 @@ So that I can organize, listen to, and share my music in a personalized way
         Examples:
             | playlistName | errorMessage        |
             | "   "        | Ops ocorreu um erro |
-            |              | Obrigatório         |   
+            |              | Obrigatório         |
 
     Scenario: Delete an existing playlist
         Given I have a Google account
@@ -36,10 +36,11 @@ So that I can organize, listen to, and share my music in a personalized way
         Then the new playlist name should be saved
         And the playlist should be displayed with the updated name
 
+
     Scenario: Add an existing track to a playlist
         Given I have a Google account
         And Execute login Scenario
-        And I have a playlist named "Favorites"
+        And I have a playlist named "DO ROCK"
         And the track "Imagine" exists in the catalog
         When I add the track to the playlist
         Then the track should be added successfully
@@ -82,12 +83,26 @@ So that I can organize, listen to, and share my music in a personalized way
         And playback should follow the updated track order
 
 
-# Scenario: Login to my account with password
-#     Given I am on the login page
-#     And I have a Google account
-#     When I enter my email in the email field
-#     And I click on the next button
-#     And I enter my password in the password field
-#     And I click on the next button
-#     Then I should be authenticated successfully
-#     And I should be redirected to the home page
+    <<<<<<< HEAD
+    # Scenario: Login to my account with password
+    #     Given I am on the login page
+    #     And I have a Google account
+    #     When I enter my email in the email field
+    #     And I click on the next button
+    #     And I enter my password in the password field
+    #     And I click on the next button
+    #     Then I should be authenticated successfully
+    #     And I should be redirected to the home page
+    =======
+    Scenario: Rename an existing playlist with a valid name
+        Given I am authenticated in YouTube Music
+        And I have a playlist named "DO ROCK"
+        When I rename the playlist to "DO SAMBA"
+        Then the new playlist name should be saved
+
+    Scenario: Delete an existing playlist
+        Given I am authenticated in YouTube Music
+        And I have a playlist named "DO SAMBA"
+        When I request to delete the playlist
+        Then the playlist should no longer appear in my playlist list
+>>>>>>> 7c62643f6359dfa311a1cb8c3376c2af01ad841b
