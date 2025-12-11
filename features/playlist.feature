@@ -61,18 +61,23 @@ Feature: YouTube Music Playlist Management
         Then the selected track should start playing
 
     Scenario: Change playlist visibility to public
-        Given I have a Google account
-        And Execute login Scenario
+        Given I am authenticated in YouTube Music
         And I have a private playlist
         When I change the playlist visibility to public
         Then the playlist should be visible to other users
 
     Scenario: Change playlist visibility to private
-        Given I have a Google account
-        And Execute login Scenario
+        Given I am authenticated in YouTube Music
         And I have a public playlist
         When I change the playlist visibility to private
         Then the playlist should no longer be visible to other users
+
+    Scenario: Change playlist visibility to public
+        Given I am authenticated in YouTube Music
+        And I have a playlist named "DO ROCK"
+        And The playlist is private
+        When I change the playlist visibility to public
+        Then the playlist should be visible to other users
 
     Scenario: Reorder tracks within a playlist
         Given I have a Google account
@@ -82,18 +87,6 @@ Feature: YouTube Music Playlist Management
         Then the new track order should be saved successfully
         And playback should follow the updated track order
 
-
-    <<<<<<< HEAD
-    # Scenario: Login to my account with password
-    #     Given I am on the login page
-    #     And I have a Google account
-    #     When I enter my email in the email field
-    #     And I click on the next button
-    #     And I enter my password in the password field
-    #     And I click on the next button
-    #     Then I should be authenticated successfully
-    #     And I should be redirected to the home page
-    =======
     Scenario: Rename an existing playlist with a valid name
         Given I am authenticated in YouTube Music
         And I have a playlist named "DO ROCK"
@@ -105,4 +98,15 @@ Feature: YouTube Music Playlist Management
         And I have a playlist named "DO SAMBA"
         When I request to delete the playlist
         Then the playlist should no longer appear in my playlist list
->>>>>>> 7c62643f6359dfa311a1cb8c3376c2af01ad841b
+
+
+
+# Scenario: Login to my account with password
+#     Given I am on the login page
+#     And I have a Google account
+#     When I enter my email in the email field
+#     And I click on the next button
+#     And I enter my password in the password field
+#     And I click on the next button
+#     Then I should be authenticated successfully
+#     And I should be redirected to the home page
