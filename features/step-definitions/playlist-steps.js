@@ -231,10 +231,6 @@ Then('the new playlist name should be saved', { timeout: 30000 }, async function
     expect(await playlistInSidebar.isDisplayed()).to.be.true;
 });
 
-
-
-
-
 Given('The playlist is public', { timeout: 30000 }, async function () {
     const sidebarXpath = `//ytmusic-guide-renderer//yt-formatted-string[text()='DO ROCK']`;
     const playlistInSidebar = await this.driver.wait(
@@ -334,9 +330,6 @@ Then('the playlist should be visible to other users', { timeout: 30000 }, async 
     expect(await privacyLabel.isDisplayed()).to.be.true;
 });
 
-
-
-
 When('I add the track {string} to the playlist', { timeout: 40000 }, async function (trackName) {
     const searchBox = await this.driver.wait(
         until.elementLocated(By.tagName("ytmusic-search-box")),
@@ -417,12 +410,6 @@ Then('the track should be added successfully', { timeout: 30000 }, async functio
     }
 });
 
-
-
-
-
-
-
 When('I select a track from the playlist to play', { timeout: 30000 }, async function () {
     const sidebarXpath = `//ytmusic-guide-renderer//yt-formatted-string[text()='DO ROCK']`;
     const playlistInSidebar = await this.driver.wait(
@@ -444,10 +431,81 @@ When('I select a track from the playlist to play', { timeout: 30000 }, async fun
     await this.driver.sleep(2000);
 });
 
-
 Then('the selected track should start playing', { timeout: 30000 }, async function () {
     await this.driver.wait(until.urlContains('watch'), TIMEOUT);
 
     const currentUrl = await this.driver.getCurrentUrl();
     expect(currentUrl).to.include('watch');
+});
+
+When('I remove the track from the playlist', { timeout: 30000 }, async function () {
+    const sidebarXpath = `//ytmusic-guide-renderer//yt-formatted-string[text()='DO ROCK']`;
+    const playlistInSidebar = await this.driver.wait(
+        until.elementLocated(By.xpath(sidebarXpath)),
+        TIMEOUT
+    );
+    await playlistInSidebar.click();
+    await this.driver.sleep(2000);
+
+    const firstTrackRow = await this.driver.wait(
+        until.elementLocated(By.css("ytmusic-responsive-list-item-renderer")),
+        TIMEOUT
+    );
+
+    const actions = this.driver.actions({async: true});
+    await actions.move({origin: firstTrackRow}).perform();
+    
+    const checkbox = await this.driver.wait(
+        until.elementLocated(By.css("ytmusic-responsive-list-item-renderer yt-checkbox-renderer")),
+        TIMEOUT
+    );
+    await checkbox.click();
+
+    await this.driver.sleep(1000); 
+
+    const deleteButton = await this.driver.wait(
+        until.elementLocated(By.xpath("//ytmusic-multi-select-menu-bar//button[@aria-label='Remover da playlist' or @aria-label='Excluir' or @aria-label='Remove from playlist']")),
+        TIMEOUT
+    );
+    await deleteButton.click();
+
+    await this.driver.sleep(1000);
+
+    try {
+        const confirmBtn = await this.driver.wait(
+            until.elementLocated(By.xpath(`
+                //yt-confirm-dialog-renderer//*[@id='confirm-button'] |
+                //yt-confirm-dialog-renderer//button[contains(., 'Remover')] |
+                //yt-confirm-dialog-renderer//button[contains(., 'Excluir')] |
+                //yt-confirm-dialog-renderer//yt-button-renderer[last()]//button
+            `)),
+            5000
+        );
+        await confirmBtn.click();
+    } catch (e) {
+        console.log("Tentando via JavaScript puro porque o Selenium não achou...");
+
+        await this.driver.executeScript(`
+            const dialog = document.querySelector('yt-confirm-dialog-renderer');
+            if (dialog) {
+                const btn = dialog.querySelector('#confirm-button');
+                if (btn) btn.click();
+            }
+        `);
+    }
+
+    await this.driver.sleep(2000);
+});
+
+Then('the track should no longer be present in the playlist', { timeout: 30000 }, async function () {
+    const trackName = "Amiga da minha mulher";
+    const trackXpath = `//ytmusic-responsive-list-item-renderer//yt-formatted-string[contains(text(), "${trackName}")]`;
+
+    await this.driver.wait(async () => {
+        const elements = await this.driver.findElements(By.xpath(trackXpath));
+        return elements.length === 0;
+    }, TIMEOUT, `A música '${trackName}' ainda está visível na playlist!`);
+
+    const elements = await this.driver.findElements(By.xpath(trackXpath));
+    expect(elements.length).to.equal(0);
 });
