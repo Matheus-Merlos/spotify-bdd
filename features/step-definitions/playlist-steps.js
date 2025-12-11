@@ -416,3 +416,38 @@ Then('the track should be added successfully', { timeout: 30000 }, async functio
         }
     }
 });
+
+
+
+
+
+
+
+When('I select a track from the playlist to play', { timeout: 30000 }, async function () {
+    const sidebarXpath = `//ytmusic-guide-renderer//yt-formatted-string[text()='DO ROCK']`;
+    const playlistInSidebar = await this.driver.wait(
+        until.elementLocated(By.xpath(sidebarXpath)),
+        TIMEOUT
+    );
+    await playlistInSidebar.click();
+    
+    await this.driver.sleep(2000);
+    
+    const firstTrackThumbnail = await this.driver.wait(
+        until.elementLocated(By.css("ytmusic-responsive-list-item-renderer ytmusic-thumbnail-renderer")),
+        TIMEOUT
+    );
+    
+    const actions = this.driver.actions({async: true});
+    await actions.move({origin: firstTrackThumbnail}).click().perform();
+
+    await this.driver.sleep(2000);
+});
+
+
+Then('the selected track should start playing', { timeout: 30000 }, async function () {
+    await this.driver.wait(until.urlContains('watch'), TIMEOUT);
+
+    const currentUrl = await this.driver.getCurrentUrl();
+    expect(currentUrl).to.include('watch');
+});

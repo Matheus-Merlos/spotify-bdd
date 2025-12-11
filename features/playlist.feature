@@ -28,20 +28,19 @@ Feature: YouTube Music Playlist Management
         When I add the track "Amiga da minha mulher" to the playlist
         Then the track should be added successfully
 
-    Scenario: Remove a track from a playlist
-        Given I have a Google account
-        And Execute login Scenario
-        And I have a playlist containing the track "Imagine"
-        When I remove the track from the playlist
-        Then the track should no longer be present in the playlist
-
-
     Scenario: Play a track from a playlist
         Given I have a Google account
         And Execute login Scenario
-        And I have a playlist with at least one track
+        And I have a playlist named "DO ROCK"
         When I select a track from the playlist to play
         Then the selected track should start playing
+
+    Scenario: Remove a track from a playlist
+        Given I have a Google account
+        And Execute login Scenario
+        And I have a playlist named "DO ROCK"
+        When I remove the track from the playlist
+        Then the track should no longer be present in the playlist
 
 
     Scenario: Change playlist visibility to public
