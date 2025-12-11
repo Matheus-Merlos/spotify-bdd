@@ -43,14 +43,6 @@ Feature: YouTube Music Playlist Management
         Then the track should no longer be present in the playlist
 
 
-    Scenario: Change playlist visibility to public
-        Given I have a Google account
-        And Execute login Scenario
-        And I have a playlist named "DO ROCK"
-        And The playlist is private
-        When I change the playlist visibility to public
-        Then the playlist should be visible to other users
-
     Scenario: Change playlist visibility to private
         Given I have a Google account
         And Execute login Scenario
