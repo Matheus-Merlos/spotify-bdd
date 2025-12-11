@@ -56,7 +56,7 @@ Inicialmente, o planejamento envolvia o uso do Spotify, porém o método de logi
 
 Os cenários seguem o padrão Given / When / Then, permitindo leitura natural e facilitando a comunicação com professores, colegas e stakeholders.
 
-🌟 Cobertura de Cenários
+#### 🌟 Cobertura de Cenários
 
 O projeto contém testes automatizados para:
 
@@ -100,14 +100,13 @@ O projeto contém testes automatizados para:
     Scenario Outline: Do not allow playlist creation with an invalid name
         Given I have a Google account
         And Execute login Scenario
-        When I request to create a playlist with the name "<playlistName>"
-        Then the system should reject the request
-        And I should receive an error message indicating "<errorMessage>"
+        When I request to create a playlist with the name <playlistName>
+        Then the system should reject the request with the message <errorMessage>
 
         Examples:
-            | playlistName | errorMessage        |
-            | "   "        | Ops ocorreu um erro |
-            |              | Obrigatório         |
+            | playlistName | errorMessage          |
+            | "   "        | "Ops! Ocorreu um erro." |
+            | ""           | "Obrigatório"           |
 ```
 
 ## 🏗️ Stack Utilizada
@@ -126,21 +125,23 @@ JavaScript
 ## ▶️ Como Executar os Testes
 
 #### Requisitos:
-* Node vx
+* Node v25.x.x
+* browser firefox
+* Conta google com canal criado no youtube e sem autenticação em dois fatores
 
 #### Passos:
 
 1. Instale as dependências do projeto
 
-``` nginx
+``` shell
 npm install
 ```
 
-2. Configure aS variáveIS de ambiente EMAIL e PASSWORD que estejam atrelados a um canal no youtube.
+2. Configure as variáveis de ambiente EMAIL e PASSWORD que estejam atrelados a um canal no youtube.
 
 3. Execute os testes
 
-``` nginx
+``` shell
 npm test
 ```
 
@@ -148,7 +149,3 @@ npm test
 
 Contribuições são bem-vindas!
 Basta abrir uma issue ou enviar um Pull Request.
-
-### 📄 Licença
-
-MIT ou outra de sua escolha.
