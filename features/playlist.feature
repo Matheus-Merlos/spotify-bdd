@@ -1,8 +1,13 @@
 Feature: Spotify Playlist Management
 
-As an authenticated Spotify user
+As an valid Spotify user
 I want to manage my playlists
 So that I can organize, listen to, and share my music in a personalized way
+
+    # Scenario: Login My account with password
+    #     Give I am on the login page
+    #     When I put my password in password box
+    #     And 
 
     Scenario: Create a playlist with a valid name
         Given I am authenticated in Spotify
