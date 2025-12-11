@@ -35,17 +35,21 @@ So that I can organize, listen to, and share my music in a personalized way
         When I select a track from the playlist to play
         Then the selected track should start playing
 
-    Scenario: Change playlist visibility to public
-        Given I am authenticated in YouTube Music
-        And I have a private playlist
-        When I change the playlist visibility to public
-        Then the playlist should be visible to other users
 
     Scenario: Change playlist visibility to private
         Given I am authenticated in YouTube Music
-        And I have a public playlist
+        And I have a playlist named "DO ROCK"
+        And The playlist is public
         When I change the playlist visibility to private
         Then the playlist should no longer be visible to other users
+
+    Scenario: Change playlist visibility to public
+        Given I am authenticated in YouTube Music
+        And I have a playlist named "DO ROCK"
+        And The playlist is private
+        When I change the playlist visibility to public
+        Then the playlist should be visible to other users
+
 
     Scenario: Reorder tracks within a playlist
         Given I am authenticated in YouTube Music
