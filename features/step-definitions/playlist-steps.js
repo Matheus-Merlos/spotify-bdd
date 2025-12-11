@@ -9,7 +9,15 @@ const TIMEOUT = 10000;
 const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
 
-Given('I am authenticated in YouTube Music', { timeout: 30000 }, async function () {
+Given('I have a Google account', async function () {
+    if (!EMAIL || !PASSWORD) {
+        throw new Error("As variáveis de ambiente EMAIL e PASSWORD não estão definidas no arquivo .env!");
+    }
+    expect(EMAIL).to.be.a('string').that.is.not.empty;
+    expect(PASSWORD).to.be.a('string').that.is.not.empty;
+});
+
+Given('Execute login Scenario', { timeout: 30000 }, async function () {
     await this.driver.get('https://music.youtube.com/');
 
     const signInButton = await this.driver.wait(

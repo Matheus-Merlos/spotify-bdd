@@ -22,22 +22,6 @@ Feature: YouTube Music Playlist Management
             | "   "        | Ops ocorreu um erro |
             |              | Obrigatório         |
 
-    Scenario: Delete an existing playlist
-        Given I have a Google account
-        And Execute login Scenario
-        And I have a playlist named "Study"
-        When I request to delete the playlist
-        Then the playlist should be deleted successfully
-        And the playlist should no longer appear in my playlist list
-
-    Scenario: Rename an existing playlist with a valid name
-        Given I have a Google account
-        And Execute login Scenario
-        And I have a playlist named "Road Trip"
-        When I rename the playlist to "Road Trip 2025"
-        Then the new playlist name should be saved
-        And the playlist should be displayed with the updated name
-
 
     Scenario: Add an existing track to a playlist
         Given I have a Google account
@@ -48,12 +32,14 @@ Feature: YouTube Music Playlist Management
         Then the track should be added successfully
         And the track should be placed at the end of the playlist
 
+
     Scenario: Remove a track from a playlist
         Given I have a Google account
         And Execute login Scenario
         And I have a playlist containing the track "Imagine"
         When I remove the track from the playlist
         Then the track should no longer be present in the playlist
+
 
     Scenario: Play a track from a playlist
         Given I have a Google account
@@ -62,24 +48,14 @@ Feature: YouTube Music Playlist Management
         When I select a track from the playlist to play
         Then the selected track should start playing
 
+
     Scenario: Change playlist visibility to public
-        Given I am authenticated in YouTube Music
+        Given I have a Google account
+        And Execute login Scenario
         And I have a private playlist
         When I change the playlist visibility to public
         Then the playlist should be visible to other users
 
-    Scenario: Change playlist visibility to private
-        Given I am authenticated in YouTube Music
-        And I have a public playlist
-        When I change the playlist visibility to private
-        Then the playlist should no longer be visible to other users
-
-    Scenario: Change playlist visibility to public
-        Given I am authenticated in YouTube Music
-        And I have a playlist named "DO ROCK"
-        And The playlist is private
-        When I change the playlist visibility to public
-        Then the playlist should be visible to other users
 
     Scenario: Reorder tracks within a playlist
         Given I have a Google account
@@ -89,26 +65,34 @@ Feature: YouTube Music Playlist Management
         Then the new track order should be saved successfully
         And playback should follow the updated track order
 
+
+
+
+    Scenario: Change playlist visibility to private
+        Given I have a Google account
+        And Execute login Scenario
+        And I have a public playlist
+        When I change the playlist visibility to private
+        Then the playlist should no longer be visible to other users
+
+    Scenario: Change playlist visibility to public
+        Given I have a Google account
+        And Execute login Scenario
+        And I have a playlist named "DO ROCK"
+        And The playlist is private
+        When I change the playlist visibility to public
+        Then the playlist should be visible to other users
+
     Scenario: Rename an existing playlist with a valid name
-        Given I am authenticated in YouTube Music
+        Given I have a Google account
+        And Execute login Scenario
         And I have a playlist named "DO ROCK"
         When I rename the playlist to "DO SAMBA"
         Then the new playlist name should be saved
 
     Scenario: Delete an existing playlist
-        Given I am authenticated in YouTube Music
+        Given I have a Google account
+        And Execute login Scenario
         And I have a playlist named "DO SAMBA"
         When I request to delete the playlist
         Then the playlist should no longer appear in my playlist list
-
-
-
-# Scenario: Login to my account with password
-#     Given I am on the login page
-#     And I have a Google account
-#     When I enter my email in the email field
-#     And I click on the next button
-#     And I enter my password in the password field
-#     And I click on the next button
-#     Then I should be authenticated successfully
-#     And I should be redirected to the home page
